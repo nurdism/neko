@@ -172,11 +172,12 @@ export abstract class BaseClient extends EventEmitter<BaseEvents> {
       return
     }
 
-    this._peer = new RTCPeerConnection()
-    if (lite !== true) {
+    if (lite) {
       this._peer = new RTCPeerConnection({
         iceServers: [{ urls: servers }],
       })
+    } else {
+      this._peer = new RTCPeerConnection()
     }
 
     this._peer.onconnectionstatechange = event => {
