@@ -75,7 +75,7 @@ export const notifications = {
   controls_taken: '{name} took the controls',
   controls_taken_force: 'force took the controls',
   controls_taken_steal: 'took the controls from {name}',
-  controls_released: '{name} released the controls',
+  controls_released: 'released the controls',
   controls_released_force: 'force released the controls',
   controls_released_steal: 'released the controls from {name}',
   controls_given: 'gave the controls to {name}',
