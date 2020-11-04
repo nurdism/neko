@@ -26,7 +26,7 @@
         </div>
         <div ref="aspect" class="player-aspect" />
       </div>
-      <ul v-if="!fullscreen" class="video-menu">
+      <ul v-if="!fullscreen" class="video-menu top">
         <li><i @click.stop.prevent="requestFullscreen" class="fas fa-expand"></i></li>
         <li v-if="admin"><i @click.stop.prevent="onResolution" class="fas fa-desktop"></i></li>
         <li class="request-control">
@@ -36,7 +36,11 @@
           />
         </li>
       </ul>
-      <neko-resolution ref="resolution" />
+      <ul v-if="!fullscreen" class="video-menu bottom">
+        <li v-if="hosting && !clipboard_available"><i @click.stop.prevent="onClipboard" class="fas fa-clipboard"></i></li>
+      </ul>
+      <neko-resolution ref="resolution" v-if="admin" />
+      <neko-clipboard ref="clipboard" v-if="hosting && !clipboard_available" />
     </div>
   </div>
 </template>
@@ -55,7 +59,14 @@
       .video-menu {
         position: absolute;
         right: 20px;
-        top: 15px;
+
+        &.top {
+          top: 15px;
+        }
+
+        &.bottom {
+          bottom: 15px;
+        }
 
         li {
           margin: 0 0 10px 0;
@@ -88,6 +99,10 @@
             &.request-control {
               display: inline-block;
             }
+          }
+
+          &:last-child {
+            margin: 0;
           }
         }
       }
@@ -163,6 +178,7 @@
 
   import Emote from './emote.vue'
   import Resolution from './resolution.vue'
+  import Clipboard from './clipboard.vue'
 
   import GuacamoleKeyboard from '~/utils/guacamole-keyboard.ts'
 
@@ -171,6 +187,7 @@
     components: {
       'neko-emote': Emote,
       'neko-resolution': Resolution,
+      'neko-clipboard': Clipboard,
     },
   })
   export default class extends Vue {
@@ -181,6 +198,7 @@
     @Ref('player') readonly _player!: HTMLElement
     @Ref('video') readonly _video!: HTMLVideoElement
     @Ref('resolution') readonly _resolution!: any
+    @Ref('clipboard') readonly _clipboard!: any
 
     private keyboard = GuacamoleKeyboard()
     private observer = new ResizeObserver(this.onResise.bind(this))
@@ -245,6 +263,10 @@
 
     get scroll_invert() {
       return this.$accessor.settings.scroll_invert
+    }
+
+    get clipboard_available() {
+      return 'clipboard' in navigator
     }
 
     get clipboard() {
@@ -320,7 +342,7 @@
 
     @Watch('clipboard')
     onClipboardChanged(clipboard: string) {
-      if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      if (this.clipboard_available && typeof navigator.clipboard.writeText === 'function') {
         navigator.clipboard.writeText(clipboard).catch(console.error)
       }
     }
@@ -446,7 +468,7 @@
         return
       }
 
-      if (this.hosting && navigator.clipboard && typeof navigator.clipboard.readText === 'function') {
+      if (this.hosting && this.clipboard_available && typeof navigator.clipboard.readText === 'function') {
         navigator.clipboard
           .readText()
           .then((text) => {
@@ -547,6 +569,10 @@
 
     onResolution(event: MouseEvent) {
       this._resolution.open(event)
+    }
+
+    onClipboard(event: MouseEvent) {
+      this._clipboard.open(event)
     }
   }
 </script>
