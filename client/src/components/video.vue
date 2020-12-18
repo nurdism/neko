@@ -36,6 +36,15 @@
           />
         </li>
       </ul>
+      <ul v-if="!fullscreen" class="video-menu bottom">
+        <li>
+          <i
+            @click.stop.prevent="requestPictureInPicture"
+            v-tooltip="{ content: 'Picture-in-Picture', placement: 'left', offset: 5, boundariesElement: 'body' }"
+            class="fas fa-external-link-alt"
+          />
+        </li>
+      </ul>
       <neko-resolution ref="resolution" />
     </div>
   </div>
@@ -438,6 +447,12 @@
 
     requestFullscreen() {
       this._player.requestFullscreen()
+      this.onResise()
+    }
+
+    requestPictureInPicture() {
+      //@ts-ignore
+      this._video.requestPictureInPicture()
       this.onResise()
     }
 
