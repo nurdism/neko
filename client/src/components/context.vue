@@ -3,7 +3,7 @@
     <template slot-scope="child" v-if="child.data">
       <li class="header">
         <div class="user">
-          <img :src="`https://ui-avatars.com/api/?name=${child.data.member.displayname}.png&size=25`" />
+          <img :src="`https://avatars.dicebear.com/4.5/api/gridy/${child.data.member.displayname}.svg`" />
           <strong>{{ child.data.member.displayname }}</strong>
         </div>
       </li>
