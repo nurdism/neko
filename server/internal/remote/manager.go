@@ -220,3 +220,7 @@ func (manager *RemoteManager) GetScreenSize() *types.ScreenSize {
 func (manager *RemoteManager) SetKeyboardLayout(layout string) {
 	xorg.SetKeyboardLayout(layout)
 }
+
+func (manager *RemoteManager) SetKeyboardModifiers(NumLock int, CapsLock int, ScrollLock int) {
+	xorg.SetKeyboardModifiers(NumLock, CapsLock, ScrollLock)
+}
