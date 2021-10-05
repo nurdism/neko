@@ -1,3 +1,8 @@
+
+<div align="center">
+  <h2>This repo is no longer maintained, for an updated fork please vist <br> <a href="https://github.com/m1k1o/neko" >https://github.com/m1k1o/neko<a/></h2>
+</div>
+
 <div align="center">
 <a href="https://n.eko.moe/#/" ><img src="https://raw.githubusercontent.com/nurdism/neko/master/docs/_media/logo.png" width="450" height="auto"/></a>
 <p align="center">
