@@ -4,7 +4,7 @@
       <template v-for="(message, index) in history">
         <li :key="index" class="message" v-if="message.type === 'text'">
           <div class="author" @contextmenu.stop.prevent="onContext($event, { member: member(message.id) })">
-            <img :src="`https://ui-avatars.com/api/?name=${member(message.id).displayname}.png&size=40`" />
+            <img :src="`https://avatars.dicebear.com/4.5/api/gridy/${member(message.id).displayname}.svg`" />
           </div>
           <div class="content">
             <div class="content-head">
